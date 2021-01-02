@@ -15,4 +15,4 @@ $> go run main.go
 
 Once running, open your browser to http://localhost:8888
 
-![alt text](https://github.com/klaxxon/jlcpcbparts/screenshot.png?raw=true)
+![alt text](/screenshot.png?raw=true)
