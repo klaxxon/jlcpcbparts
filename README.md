@@ -1,5 +1,5 @@
 # jlcpcbparts
-A simple golang webserver that provides a much easier to search interface into the JLCPCB parts inventory.
+A simple golang webserver that provides a much easier to search interface into the JLCPCB parts inventory.  Currently provides a simple search with the option of showing only those with stock.
 
 
 Before running program, go download the latest parts XLS file at https://jlcpcb.com/parts.
