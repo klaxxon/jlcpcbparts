@@ -13,3 +13,5 @@ then run the program:
 $> go run main.go
 ```
 
+Once running, open your browser to http://localhost:8888
+
