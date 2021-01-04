@@ -18,7 +18,11 @@
       </style>
   </head>
   <body>
-    <div style='width:20%; position:fixed; left:0;'>
+    <div style="height:20px; border-bottom:1px solid black;">
+      <span style="position:fixed; left:0;">JLCPCB Parts Searcher</span>
+      <span style="float:right; right:0;">Timestamp on parts.csv: {{ .PartsTimestamp }}</span>
+    </div>
+    <div style='width:20%; position:fixed; left:0; top:30px;'>
       Total Parts:<span>{{ .Totalparts }}</span><br/>
       Avail Parts:<span>{{ .Availparts }}</span><br/>
       <hr/>
@@ -27,7 +31,7 @@
       <input type="checkbox" id="instock">In stock only
       <button id="search" onclick="search()">Search</button><br/>
     </div>
-    <div style='width:80%; position:fixed; left:20%;'>
+    <div style='width:80%; position:fixed; left:20%; top:30px;'>
       Matching parts found: <span id="partcount"></span><br/>
       <table id="results">
         <thead>
