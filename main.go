@@ -9,7 +9,10 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"text/template"
 )
+
+var totalParts, availParts int
 
 type Price struct {
 	Min  int
@@ -87,8 +90,23 @@ func main() {
 		i, _ = strconv.ParseInt(r[11], 10, 64)
 		p.Stock = int(i)
 		parts[p.LCSC] = p
+		totalParts++
+		if p.Stock > 0 {
+			availParts++
+		}
 	}
-	http.Handle("/", http.FileServer(http.Dir("./www")))
+	log.Println("Starting webserver")
+	tmpl := template.Must(template.ParseFiles("www/index.html"))
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		d := struct {
+			Totalparts int
+			Availparts int
+		}{
+			Totalparts: totalParts,
+			Availparts: availParts,
+		}
+		tmpl.Execute(w, d)
+	})
 	http.HandleFunc("/search", search)
 	log.Fatal(http.ListenAndServe(":8888", nil))
 }
@@ -104,7 +122,8 @@ func search(w http.ResponseWriter, r *http.Request) {
 			p = append(p, parts[a])
 		}
 	}
-	j, _ := json.Marshal(&p)
+
+	j, _ := json.Marshal(p)
 	w.Write([]byte(j))
 }
 

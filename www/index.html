@@ -18,25 +18,32 @@
       </style>
   </head>
   <body>
-    Search Text:
-    <input type="text" id="txt"><input type="checkbox" id="instock">In stock only
-    <button onclick="search()">Search</button><br/>
-    Matching parts found: <span id="partcount"></span><br/>
-    <hr/>
-    <table id="results">
-      <thead>
-        <th>Part</th>
-        <th>Image</th>
-        <th>Description</th>
-        <th>Pin Count</th>
-        <th>Type</th>
-        <th>Manufacturer</th>
-        <th>Stock</th>
-        <th>Price</th>
-      </thead>
-      <tbody></tbody>
-    </table>
-    <div class="zoom"></div>
+    <div style='width:20%; position:fixed; left:0;'>
+      Total Parts:<span>{{ .Totalparts }}</span><br/>
+      Avail Parts:<span>{{ .Availparts }}</span><br/>
+      <hr/>
+      Search Text:<br/>
+      <input type="text" id="txt"><br/>
+      <input type="checkbox" id="instock">In stock only
+      <button id="search" onclick="search()">Search</button><br/>
+    </div>
+    <div style='width:80%; position:fixed; left:20%;'>
+      Matching parts found: <span id="partcount"></span><br/>
+      <table id="results">
+        <thead>
+          <th>Part</th>
+          <th>Image</th>
+          <th>Description</th>
+          <th>Pin Count</th>
+          <th>Type</th>
+          <th>Manufacturer</th>
+          <th>Stock</th>
+          <th>Price</th>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="zoom"></div>
+      </div>
   </body>
 </html>
 <script>
@@ -58,6 +65,15 @@
           }
         },{},{},{},{},{},{}
     ]});  
+    document.getElementById("txt").addEventListener("keyup", function(event) {
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById("search").click();
+      }
+    });
   });
 
   function search() {
