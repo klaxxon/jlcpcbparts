@@ -31,7 +31,7 @@
       <input type="checkbox" id="instock">In stock only
       <button id="search" onclick="search()">Search</button><br/>
     </div>
-    <div style='width:80%; position:fixed; left:20%; top:30px;'>
+    <div style='width:80%; position:absolute; left:20%; top:30px;'>
       Matching parts found: <span id="partcount"></span><br/>
       <table id="results">
         <thead>
@@ -110,7 +110,7 @@
       if (!l.BasicType) b = "Extended";
       var p = l.Price[0];
       var price = "" + p.Min + "+ $"+p.Cost;
-      var n = t.row.add(["<a target='_' href='https://jlcpcb.com/parts/componentSearch?searchTxt="+ l.LCSC + "'>"+l.ManuPart+"</a>", l.LCSC, l.Descr, l.Solder, b, l.Manu, l.Stock, price]);
+      var n = t.row.add(["<a target='_' href='https://jlcpcb.com/parts/componentSearch?searchTxt="+ l.LCSC + "' title=\""+l.LCSC+"\">"+l.ManuPart+"</a>", l.LCSC, l.Descr, l.Solder, b, l.Manu, l.Stock, price]);
       $(n).id = l.LCSC;
       t.draw(false);
     }
