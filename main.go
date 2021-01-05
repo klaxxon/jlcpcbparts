@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 	"text/template"
+	"time"
 )
 
 var totalParts, availParts int
@@ -61,9 +62,10 @@ func main() {
 	log.Println("Opening parts library file.....")
 	csvfile, err := os.Open("parts.csv")
 	if err != nil {
-		log.Panic("Error tying to open parts.csv : %v", err)
+		log.Panic("Error tying to open parts.csv :", err)
 	}
-	log.Println("Loading parts library.....")
+	stat, _ := csvfile.Stat()
+	log.Printf("Loading parts library %v.....", stat.ModTime().Format(time.RFC3339))
 	r := csv.NewReader(csvfile)
 	r.Read() // Header
 	for {
@@ -96,15 +98,17 @@ func main() {
 		}
 	}
 	log.Println("Starting webserver")
-	tmpl := template.Must(template.ParseFiles("www/index.html"))
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		d := struct {
-			Totalparts int
-			Availparts int
+			Totalparts     int
+			Availparts     int
+			PartsTimestamp time.Time
 		}{
-			Totalparts: totalParts,
-			Availparts: availParts,
+			Totalparts:     totalParts,
+			Availparts:     availParts,
+			PartsTimestamp: stat.ModTime(),
 		}
+		tmpl := template.Must(template.ParseFiles("www/index.html"))
 		tmpl.Execute(w, d)
 	})
 	http.HandleFunc("/search", search)
